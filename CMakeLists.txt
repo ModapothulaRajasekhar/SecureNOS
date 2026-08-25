@@ -24,4 +24,10 @@ message(STATUS "========================================")
 
 add_executable(securenos
     src/main.cpp
+    src/system/system_manager.cpp
+)
+
+target_include_directories(securenos
+    PRIVATE
+        ${PROJECT_SOURCE_DIR}/include
 )
