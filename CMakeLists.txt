@@ -25,9 +25,19 @@ message(STATUS "========================================")
 add_executable(securenos
     src/main.cpp
     src/system/system_manager.cpp
+    src/config/config_manager.cpp
+)
+
+add_executable(config_manager_test
+    tests/config_manager_test.cpp
+    src/config/config_manager.cpp
 )
 
 target_include_directories(securenos
     PRIVATE
         ${PROJECT_SOURCE_DIR}/include
+)
+target_include_directories(config_manager_test
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
