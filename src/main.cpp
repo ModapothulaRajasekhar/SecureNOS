@@ -18,6 +18,14 @@ int main()
     }
 
     std::cout << "[System] Initialization successful." << std::endl;
+   
+    if (!systemManager.start())
+    {
+        std::cerr << "[System] Startup failed." << std::endl;
+        return 1;
+    }
+
+    std::cout << "[System] Startup successful." << std::endl;
 
     return 0;
 }

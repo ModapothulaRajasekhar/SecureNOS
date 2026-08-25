@@ -12,4 +12,11 @@ bool SystemManager::initialize()
     return true;
 }
 
+bool SystemManager::start()
+{
+    std::cout << "[System] Starting SecureNOS..." << std::endl;
+
+    return true;
+}
+
 } // namespace securenos
