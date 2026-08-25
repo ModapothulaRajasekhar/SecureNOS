@@ -10,6 +10,7 @@ bool ConfigManager::initialize()
     std::cout << "[Config] Initializing configuration manager..." << std::endl;
 
     configuration_.clear();
+    configuration_["hostname"] = "SecureNOS";
 
     return true;
 }
@@ -53,4 +54,5 @@ bool ConfigManager::remove(const std::string& key)
 
     return true;
 }
+
 } // namespace securenos

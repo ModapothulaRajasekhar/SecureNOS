@@ -9,11 +9,15 @@ int main()
     securenos::ConfigManager config;
 
     assert(config.initialize());
+    
+    std::string hostname;
+   
+    assert(config.get("hostname", hostname));
+    assert(hostname == "SecureNOS");
 
     assert(config.set("hostname", "SecureNOS"));
     assert(!config.set("", "Invalid"));
 
-    std::string hostname;
 
     assert(config.get("hostname", hostname));
     assert(hostname == "SecureNOS");

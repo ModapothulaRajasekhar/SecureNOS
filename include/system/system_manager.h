@@ -2,6 +2,7 @@
 #define SECURENOS_SYSTEM_MANAGER_H
 
 #include <atomic>
+#include "config/config_manager.h"
 
 namespace securenos
 {
@@ -16,6 +17,8 @@ public:
     bool start();
     void run(const std::atomic<bool>& shutdownRequested);
     void shutdown();
+private:
+    ConfigManager configManager_;
 };
 
 } // namespace securenos

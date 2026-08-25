@@ -11,6 +11,11 @@ namespace securenos
 bool SystemManager::initialize()
 {
     std::cout << "[System] Initializing SecureNOS..." << std::endl;
+    if (!configManager_.initialize())
+    {
+        std::cerr << "[Config] Configuration manager initialization failed." << std::endl;
+        return false;
+    }
 
     return true;
 }
