@@ -26,6 +26,6 @@ int main()
     }
 
     std::cout << "[System] Startup successful." << std::endl;
-
+    systemManager.run();
     return 0;
 }
