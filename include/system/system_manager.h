@@ -1,6 +1,8 @@
 #ifndef SECURENOS_SYSTEM_MANAGER_H
 #define SECURENOS_SYSTEM_MANAGER_H
 
+#include <atomic>
+
 namespace securenos
 {
 
@@ -12,7 +14,7 @@ public:
 
     bool initialize();
     bool start();
-    void run();
+    void run(const std::atomic<bool>& shutdownRequested);
     void shutdown();
 };
 

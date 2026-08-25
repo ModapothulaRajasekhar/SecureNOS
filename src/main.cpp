@@ -1,9 +1,24 @@
 #include "system/system_manager.h"
 
 #include <iostream>
+#include <csignal>
+#include <atomic>
+
+
+std::atomic<bool> shutdownRequested{false};
+
+void signalHandler(int signal)
+{
+    if (signal == SIGINT)
+    {
+        shutdownRequested.store(true);
+    }
+}
 
 int main()
-{
+{   
+    std::signal(SIGINT, signalHandler);
+   
     std::cout << "========================================" << std::endl;
     std::cout << "       SecureNOS Network OS" << std::endl;
     std::cout << "       Version: 0.1.0" << std::endl;
@@ -26,6 +41,7 @@ int main()
     }
 
     std::cout << "[System] Startup successful." << std::endl;
-    systemManager.run();
+    systemManager.run(shutdownRequested);
+    systemManager.shutdown();
     return 0;
 }
