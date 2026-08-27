@@ -31,7 +31,12 @@ int main()
     assert(config.get("mtu", mtuValue));
     assert(mtuValue.type() == securenos::ConfigValueType::INTEGER);
     assert(mtuValue.asInteger() == 9000);
-
+    
+    assert(config.set("mtu", securenos::ConfigValue(true)));
+    
+    assert(config.get("mtu", mtuValue));
+    assert(mtuValue.type() == securenos::ConfigValueType::BOOLEAN);
+    assert(mtuValue.asBoolean());
 
     securenos::ConfigValue sshEnabled(true);
     
