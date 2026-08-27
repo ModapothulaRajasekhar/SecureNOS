@@ -28,9 +28,13 @@ public:
     bool get(const std::string& key, ConfigValue& value) const;
 
     bool remove(const std::string& key);
+    const std::string& configFilePath() const;
+    bool save() const;
+    bool load();
 
 private:
     std::unordered_map<std::string, ConfigValue> configuration_;
+    std::string configFilePath_;
 };
 
 } // namespace securenos

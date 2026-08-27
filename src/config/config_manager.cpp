@@ -1,6 +1,8 @@
 #include "config/config_manager.h"
 
+#include <fstream>
 #include <iostream>
+#include <string>
 
 namespace securenos
 {
@@ -8,7 +10,8 @@ namespace securenos
 bool ConfigManager::initialize()
 {
     std::cout << "[Config] Initializing configuration manager..." << std::endl;
-
+    
+    configFilePath_ = "config/secure_nos.conf";
     configuration_.clear();
     configuration_.insert_or_assign("hostname", ConfigValue("SecureNOS"));
 
@@ -71,6 +74,115 @@ bool ConfigManager::remove(const std::string& key)
     }
 
     configuration_.erase(it);
+
+    return true;
+}
+
+const std::string& ConfigManager::configFilePath() const
+{
+    return configFilePath_;
+}
+
+bool ConfigManager::save() const
+{
+    std::ofstream file(configFilePath_);
+
+    if (!file.is_open())
+    {
+        return false;
+    }
+
+    for (const auto& entry : configuration_)
+    {
+        file << entry.first << "=";
+
+        switch (entry.second.type())
+        {
+            case ConfigValueType::STRING:
+                file << entry.second.asString();
+                break;
+
+            case ConfigValueType::INTEGER:
+                file << entry.second.asInteger();
+                break;
+
+            case ConfigValueType::BOOLEAN:
+                file << (entry.second.asBoolean() ? "true" : "false");
+                break;
+        }
+
+        file << '\n';
+    }
+
+    return true;
+}
+
+
+bool ConfigManager::load()
+{
+    std::ifstream file(configFilePath_);
+
+    if (!file.is_open())
+    {
+        return false;
+    }
+
+    std::string line;
+
+    while (std::getline(file, line))
+    {
+        if (line.empty())
+        {
+            continue;
+        }
+
+        const auto delimiter = line.find('=');
+
+        if (delimiter == std::string::npos)
+        {
+            continue;
+        }
+
+        const std::string key = line.substr(0, delimiter);
+        const std::string value = line.substr(delimiter + 1);
+
+        if (key.empty())
+        {
+            continue;
+        }
+        
+        if (value.empty())
+        {
+            continue;
+        }
+
+        if (value == "true")
+        {
+            configuration_.insert_or_assign(key, ConfigValue(true));
+        }
+        else if (value == "false")
+        {
+            configuration_.insert_or_assign(key, ConfigValue(false));
+        }
+        else
+        {
+            try
+            {
+                const int integerValue = std::stoi(value);
+                configuration_.insert_or_assign(
+                    key,
+                    ConfigValue(integerValue)
+                );
+            }
+            catch (const std::exception&)
+            {
+                configuration_.insert_or_assign(
+                    key,
+                    ConfigValue(value)
+                );
+            }
+        }
+    }
 
     return true;
 }
