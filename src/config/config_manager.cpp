@@ -27,6 +27,26 @@ bool ConfigManager::set(const std::string& key, const ConfigValue& value)
     return true;
 }
 
+bool ConfigManager::set(const std::string& key, const std::string& value)
+{
+    return set(key, ConfigValue(value));
+}
+
+bool ConfigManager::set(const std::string& key, const char* value)
+{
+    return set(key, ConfigValue(value));
+}
+
+bool ConfigManager::set(const std::string& key, int value)
+{
+    return set(key, ConfigValue(value));
+}
+
+bool ConfigManager::set(const std::string& key, bool value)
+{
+    return set(key, ConfigValue(value));
+}
+
 bool ConfigManager::get(const std::string& key, ConfigValue& value) const
 {
     auto it = configuration_.find(key);
