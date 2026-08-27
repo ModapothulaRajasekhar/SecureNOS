@@ -10,24 +10,24 @@ bool ConfigManager::initialize()
     std::cout << "[Config] Initializing configuration manager..." << std::endl;
 
     configuration_.clear();
-    configuration_["hostname"] = "SecureNOS";
+    configuration_.insert_or_assign("hostname", ConfigValue("SecureNOS"));
 
     return true;
 }
 
-bool ConfigManager::set(const std::string& key, const std::string& value)
+bool ConfigManager::set(const std::string& key, const ConfigValue& value)
 {
     if (key.empty())
     {
         return false;
     }
 
-    configuration_[key] = value;
+    configuration_.insert_or_assign(key, value);
 
     return true;
 }
 
-bool ConfigManager::get(const std::string& key, std::string& value) const
+bool ConfigManager::get(const std::string& key, ConfigValue& value) const
 {
     auto it = configuration_.find(key);
 

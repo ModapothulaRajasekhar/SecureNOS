@@ -26,18 +26,35 @@ add_executable(securenos
     src/main.cpp
     src/system/system_manager.cpp
     src/config/config_manager.cpp
-)
-
-add_executable(config_manager_test
-    tests/config_manager_test.cpp
-    src/config/config_manager.cpp
+    src/config/config_value.cpp
 )
 
 target_include_directories(securenos
     PRIVATE
         ${PROJECT_SOURCE_DIR}/include
 )
+
+
+add_executable(config_manager_test
+    tests/config_manager_test.cpp
+    src/config/config_manager.cpp
+    src/config/config_value.cpp
+)
+
 target_include_directories(config_manager_test
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+add_executable(config_value_test
+    tests/config_value_test.cpp
+    src/config/config_value.cpp
+    src/config/config_manager.cpp
+    src/config/config_value.cpp
+
+)
+
+target_include_directories(config_value_test
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/include
 )

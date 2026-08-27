@@ -3,6 +3,7 @@
 
 #include <string>
 #include <unordered_map>
+#include "config/config_value.h"
 
 namespace securenos
 {
@@ -15,14 +16,14 @@ public:
 
     bool initialize();
 
-    bool set(const std::string& key, const std::string& value);
+    bool set(const std::string& key, const ConfigValue& value);
 
-    bool get(const std::string& key, std::string& value) const;
+    bool get(const std::string& key, ConfigValue& value) const;
 
     bool remove(const std::string& key);
 
 private:
-    std::unordered_map<std::string, std::string> configuration_;
+    std::unordered_map<std::string, ConfigValue> configuration_;
 };
 
 } // namespace securenos
